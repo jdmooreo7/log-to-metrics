@@ -12,7 +12,11 @@ const logger = winston.createLogger({
     winston.format.json()
   ),
   transports: [
-    new winston.transports.File({ filename: 'app.log' })
+    new winston.transports.File({ 
+      filename: 'app.log',
+      tailable: true,
+      maxsize: 10485760, // 10MB, rotate if larger
+      })
   ]
 });
 
