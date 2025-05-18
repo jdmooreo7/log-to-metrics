@@ -253,11 +253,11 @@ Expect output like “No anomaly at [timestamp]: [vector]” or “Anomaly detec
 
 ## Diagram
 
-```
+```mermaid
    graph TD
     A[simulate.js] -->|Sends HTTP Requests| B[app.js]
     B -->|Writes Logs| C[app.log]
-    B -->|Exposes Metrics| D[/metrics Endpoint]
+    B -->|Exposes Metrics| D[metrics Endpoint]
     C -->|Monitored by| E[stream_logs_to_metrics.py]
     E -->|Generates| F[metrics.csv]
     E -->|Stores Vectors| H[Pinecone log-metrics Index]
@@ -269,6 +269,7 @@ Expect output like “No anomaly at [timestamp]: [vector]” or “Anomaly detec
     M -->|Queried by| N[Grafana]
     L -->|Queried via Infinity| N
     N -->|Visualizes| O[Dashboards: Requests, Errors, Pinecone Metrics]
+```
 
 ## License
 
