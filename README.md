@@ -251,6 +251,25 @@ Expect output like “No anomaly at [timestamp]: [vector]” or “Anomaly detec
 
   - Rerun `simulate.js`.
 
+## Diagram
+
+```
+   graph TD
+    A[simulate.js] -->|Sends HTTP Requests| B[app.js]
+    B -->|Writes Logs| C[app.log]
+    B -->|Exposes Metrics| D[/metrics Endpoint]
+    C -->|Monitored by| E[stream_logs_to_metrics.py]
+    E -->|Generates| F[metrics.csv]
+    E -->|Stores Vectors| H[Pinecone log-metrics Index]
+    H -->|Fetched by| I[anomaly_detection.py]
+    I -->|Outputs| J[Anomaly Results]
+    H -->|Fetched by| K[expose_metrics.py]
+    K -->|Serves JSON| L[http://localhost:5000/metrics]
+    D -->|Scraped by| M[Prometheus]
+    M -->|Queried by| N[Grafana]
+    L -->|Queried via Infinity| N
+    N -->|Visualizes| O[Dashboards: Requests, Errors, Pinecone Metrics]
+
 ## License
 
 MIT License. See [LICENSE](LICENSE) for details.
